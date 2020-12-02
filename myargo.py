@@ -31,6 +31,3 @@ def get_days_of_power(R1, D1, R2, D2, R3, D3, K):
             # print(f'{K}-3')
             Power += 1
     return (f'Total Days of Power = {Power} days')
-
-
-print(get_days_of_power(1000, 3, 500, 10, 1500, 7, 21000))
