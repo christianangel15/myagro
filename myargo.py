@@ -1,33 +1,32 @@
 def get_days_of_power(R1, D1, R2, D2, R3, D3, K):
-
-    LoanDayAmnt = {
-        D1: R1,
-        D2: R2,
-        D3: R3
-    }
-    days = []
-    rate = []
-    for key in sorted(LoanDayAmnt):
-        days.append(key)
-        rate.append(LoanDayAmnt[key])
-    # print('Day and rate created')
+    sub_li = [[D1, R1], [D2, R2], [D3, R3]]
+    sub_li.sort(key=lambda x: x[0])
+    # print(sub_li)
     index = -1
     Power = 0
     while True:
-        if (K < rate[0]) or (K < (rate[0] + rate[1])) or (K < (rate[0]+rate[1]+rate[2])):
-            break
         index += 1
         # print(f'Day {index} started')
-        if (index >= days[0]) and (index < days[1]):
-            K -= rate[0]
+        if (index >= sub_li[0][0]) and (index < sub_li[1][0]):
+            K -= sub_li[0][1]
             # print(f'{K}-1')
             Power += 1
-        elif (index >= days[1]) and (index < days[2]):
-            K -= (rate[0]+rate[1])
+            if (K < sub_li[0][1]):
+                break
+        elif (index >= sub_li[1][0]) and (index < sub_li[2][0]):
+            K -= (sub_li[0][1]+sub_li[1][1])
             # print(f'{K}-2')
             Power += 1
-        elif (index >= days[2]):
-            K -= (rate[0]+rate[1]+rate[2])
+            if (K < (sub_li[0][1] + sub_li[1][1])):
+                break
+        elif (index >= sub_li[2][0]):
+            K -= (sub_li[0][1]+sub_li[1][1]+sub_li[2][1])
             # print(f'{K}-3')
             Power += 1
-    return (f'Total Days of Power = {Power} days')
+            if (K < (sub_li[0][1] + sub_li[1][1] + sub_li[2][1])):
+                break
+    return Power
+
+
+# get_days_of_power(
+#     R1=10000, D1=3, R2=500, D2=10, R3=1500, D3=7, K=11000)
